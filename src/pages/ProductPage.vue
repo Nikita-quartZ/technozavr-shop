@@ -40,7 +40,7 @@
           <div class="item__form">
             <form class="form" action="#" method="POST">
               <b class="item__price">
-                {{ NumberFormat(product.price) }} ₽
+                {{ product.price |  NumberFormat }} ₽
               </b>
 
               <fieldset class="form__block">
@@ -218,6 +218,9 @@ import NumberFormat from '@/helpers/numberFormat';
 
 export default {
   props: ['PageParams'],
+  filters: {
+    NumberFormat,
+  },
   computed: {
     product() {
       return product.find(product => product.id === this.PageParams.id)
@@ -228,7 +231,6 @@ export default {
   },
   methods: {
     gotoPage,
-    NumberFormat
   }
 }
 </script>

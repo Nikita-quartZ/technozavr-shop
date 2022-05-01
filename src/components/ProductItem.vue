@@ -11,7 +11,7 @@
     </h3>
 
     <span class="catalog__price">
-      {{ NumberFormat(product.price) }} ₽
+      {{ product.price | NumberFormat }} ₽
     </span>
 
     <ul class="colors colors--black">
@@ -59,9 +59,11 @@ export default {
       color: '#73B6EA',
     };
   },
+  filters: {
+    NumberFormat,
+  },
   methods: {
     gotoPage,
-    NumberFormat,
   }
 };
 </script>
