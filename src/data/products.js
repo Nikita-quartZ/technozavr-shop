@@ -5,7 +5,7 @@ export default [
     title: 'Радионяня Motorola MBP16',
     price: 3690,
     image: '/img/radio.jpg',
-    colorId: 1,
+    colorId: [1, 3, 5],
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ export default [
     title: 'Ультразвуковая зубная щётка Playbrush Smart Sonic',
     price: 5660,
     image: '/img/toothbrush.jpg',
-    colorId: 6,
+    colorId: [5, 6],
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ export default [
     title: 'Смартфон Xiaomi Mi Mix 3 6/128GB',
     price: 21790,
     image: '/img/phone.jpg',
-    colorId: 7,
+    colorId: [3, 5, 7],
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ export default [
     title: 'Электроскейт Razor Cruiser',
     price: 24690,
     image: 'img/board.jpg',
-    colorId: 3,
+    colorId: [3, 5],
   },
   {
     id: 5,
@@ -37,7 +37,7 @@ export default [
     title: 'Смартфон Xiaomi Mi A3 4/64GB Android One',
     price: 14960,
     image: '/img/phone-2.jpg',
-    colorId: 1,
+    colorId: [1, 3],
   },
   {
     id: 6,
@@ -45,7 +45,7 @@ export default [
     title: 'Смартфон Xiaomi Redmi 6/128GB',
     price: 8960,
     image: '/img/phone-3.jpg',
-    colorId: 7,
+    colorId: [2, 6, 7],
   },
   {
     id: 7,
@@ -53,7 +53,7 @@ export default [
     title: 'Электрический дрифт-карт Razor Crazy Cart',
     price: 39900,
     image: '/img/bicycle.jpg',
-    colorId: 3,
+    colorId: [3, 4, 5],
   },
   {
     id: 8,
@@ -61,7 +61,7 @@ export default [
     title: 'Гироскутер Razor Hovertrax 2.0',
     price: 34900,
     image: '/img/wheels.jpg',
-    colorId: 2,
+    colorId: [1, 3, 5],
   },
   {
     id: 9,
@@ -69,7 +69,7 @@ export default [
     title: 'Детский трюковой самокат Razor Grom',
     price: 4990,
     image: '/img/scooter.jpg',
-    colorId: 2,
+    colorId: [5, 6],
   },
   {
     id: 10,
@@ -77,7 +77,7 @@ export default [
     title: 'Роллерсёрф Razor RipStik Air Pro',
     price: 6690,
     image: '/img/ripstik.jpg',
-    colorId: 5,
+    colorId: [5, 7],
   },
   {
     id: 11,
@@ -85,7 +85,7 @@ export default [
     title: 'Наушники AirPods с беспроводным зарядным футляром',
     price: 16560,
     image: '/img/airpods.jpg',
-    colorId: 6,
+    colorId: [1, 2, 5],
   },
   {
     id: 12,
@@ -93,7 +93,7 @@ export default [
     title: 'Наушники Sony',
     price: 30690,
     image: '/img/headphones.jpg',
-    colorId: 1,
+    colorId: [1, 4, 5],
   },
   {
     id: 13,
@@ -101,7 +101,7 @@ export default [
     title: 'Мужские хлопковые трусы-боксеры с принтом',
     price: 790,
     image: '/img/pants.jpg',
-    colorId: 1,
+    colorId: [1, 2, 3],
   },
   {
     id: 14,
@@ -109,7 +109,7 @@ export default [
     title: 'Скрытые большие настенные часы',
     price: 1169,
     image: '/img/clock.jpg',
-    colorId: 4,
+    colorId: [1, 6],
   },
   {
     id: 15,
@@ -117,7 +117,7 @@ export default [
     title: 'Ручной терминал сканер штрих-кода',
     price: 26000,
     image: '/img/terminal.jpg',
-    colorId: 7,
+    colorId: [1, 5, 7],
   },
   {
     id: 16,
@@ -125,7 +125,7 @@ export default [
     title: 'Универсальная настольная подставка для планшета',
     price: 440,
     image: '/img/rack.jpg',
-    colorId: 7,
+    colorId: [5],
   },
   {
     id: 17,
@@ -133,7 +133,7 @@ export default [
     title: 'Винный шкаф Kitfort',
     price: 21590,
     image: '/img/Kitfort.jpg',
-    colorId: 5,
+    colorId: [4, 6],
   },
   {
     id: 18,
@@ -141,7 +141,7 @@ export default [
     title: 'Электрическая варочная панель LG',
     price: 29990,
     image: '/img/electric-stove.jpeg',
-    colorId: 5,
+    colorId: [1, 2, 4],
   },
   {
     id: 19,
@@ -149,7 +149,7 @@ export default [
     title: 'Ноутбук ASUS R565JF-BQ294T',
     price: 46999,
     image: '/img/laptop.webp',
-    colorId: 2,
+    colorId: [3],
   },
   {
     id: 20,
@@ -157,7 +157,7 @@ export default [
     title: 'Смартфон Xiaomi Redmi Note 10S 6+128GB Gray',
     price: 23999,
     image: '/img/smartfone.webp',
-    colorId: 7,
+    colorId: [3, 4],
   },
   {
     id: 21,
@@ -165,7 +165,7 @@ export default [
     title: 'Телевизор Philips 55PUS7956/60',
     price: 54999,
     image: '/img/televis.webp',
-    colorId: 1,
+    colorId: [1, 7],
   },
   {
     id: 22,
@@ -173,7 +173,7 @@ export default [
     title: 'Умная колонка Новая Яндекс.Станция Мини',
     price: 7999,
     image: '/img/yandex-station.webp',
-    colorId: 2,
+    colorId: [3, 6],
   },
   {
     id: 23,
@@ -181,7 +181,7 @@ export default [
     title: 'Робот-пылесос Tefal X-PLORER SERIE 50 RG7387WH',
     price: 18999,
     image: '/img/robot-vacuum-cleaner.webp',
-    colorId: 3,
+    colorId: [2, 4, 6],
   },
   {
     id: 24,
@@ -189,6 +189,6 @@ export default [
     title: 'Мультиварка Tefal MULTICOOK & BAKE RK908A32',
     price: 32999,
     image: '/img/multicooker.webp',
-    colorId: 7,
+    colorId: [5],
   },
 ];
