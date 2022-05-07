@@ -4,14 +4,14 @@
       <div class="content__top">
         <ul class="breadcrumbs">
           <li class="breadcrumbs__item">
-            <a class="breadcrumbs__link" href="#" @click.prevent="gotoPage('main')">
+            <router-link class="breadcrumbs__link" :to="{name: 'main'}">
               Каталог
-            </a>
+            </router-link>
           </li>
           <li class="breadcrumbs__item">
-            <a class="breadcrumbs__link" href="#" @click.prevent="gotoPage('main')">
+            <router-link class="breadcrumbs__link" :to="{name: 'main'}">
               {{ category.title }}
-            </a>
+            </router-link>
           </li>
           <li class="breadcrumbs__item">
             <a class="breadcrumbs__link">
@@ -38,7 +38,7 @@
             {{ product.title }}
           </h2>
           <div class="item__form">
-            <form class="form" action="#" method="POST">
+            <form class="form" action="#" method="POST" @submit.prevent="addToCart">
               <b class="item__price">
                 {{ product.price |  NumberFormat }} ₽
               </b>
@@ -133,21 +133,7 @@
               </fieldset>
 
               <div class="item__row">
-                <div class="form__counter">
-                  <button type="button" aria-label="Убрать один товар">
-                    <svg width="12" height="12" fill="currentColor">
-                      <use xlink:href="#icon-minus"></use>
-                    </svg>
-                  </button>
-
-                  <input type="text" value="1" name="count">
-
-                  <button type="button" aria-label="Добавить один товар">
-                    <svg width="12" height="12" fill="currentColor">
-                      <use xlink:href="#icon-plus"></use>
-                    </svg>
-                  </button>
-                </div>
+                <ProductCounter v-model="productAmount"/>
                 <button class="button button--primery" type="submit">
                   В корзину
                 </button>
@@ -211,19 +197,28 @@
 </template>
 
 <script>
+import ProductCounter from '@/components/ProductCounter.vue';
 import product from "@/data/products";
 import categories from "@/data/categories";
 import gotoPage from '@/helpers/gotoPage';
 import NumberFormat from '@/helpers/numberFormat';
 
 export default {
-  props: ['PageParams'],
+  name: 'productPage',
+  data() {
+    return {
+      productAmount: 1,
+    }
+  },
   filters: {
     NumberFormat,
   },
+  components: {
+    ProductCounter
+  },
   computed: {
     product() {
-      return product.find(product => product.id === this.PageParams.id)
+      return product.find(product => product.id === Number(this.$route.params.id))
     },
     category() {
       return categories.find(category => category.id === this.product.categoryId)
@@ -231,6 +226,12 @@ export default {
   },
   methods: {
     gotoPage,
-  }
+    addToCart() {
+      this.$store.commit(
+        'addProductToCart',
+        {productId: Number(this.$route.params.id) , amount: this.productAmount}
+        );
+    }
+  },
 }
 </script>
