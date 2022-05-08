@@ -133,7 +133,7 @@
               </fieldset>
 
               <div class="item__row">
-                <ProductCounter v-model="productAmount"/>
+                <ProductCounter :count.sync="productAmount"/>
                 <button class="button button--primery" type="submit">
                   В корзину
                 </button>
