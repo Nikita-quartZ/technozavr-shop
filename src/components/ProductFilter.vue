@@ -147,8 +147,9 @@
 </template>
 
 <script>
-import categories from '../data/categories';
 import colors from '../data/colors';
+import axios from 'axios';
+import { API_BASE_URL } from '../config'
 
 export default {
   name: 'ProductFilter',
@@ -158,12 +159,14 @@ export default {
       currentPriceTo: 0,
       currentCategoryId: 0,
       currentColorId: 0,
+
+      categoriesData: null,
     };
   },
   props: ['priceFrom', 'priceTo', 'categoryId', 'colorsId'],
   computed: {
     categories() {
-      return categories;
+      return this.categoriesData ? this.categoriesData.items : [];
     },
     colors() {
       return colors;
@@ -176,7 +179,7 @@ export default {
     priceTo(value) {
       this.currentPriceTo = value;
     },
-    caregoryId(value) {
+    categoryId(value) {
       this.currentCategoryId = value;
     },
     colorsId(value) {
@@ -187,15 +190,22 @@ export default {
     submit() {
       this.$emit('update:priceFrom', this.currentPriceFrom);
       this.$emit('update:priceTo', this.currentPriceTo);
-      this.$emit('update:caregoryId', this.currentCategoryId);
+      this.$emit('update:categoryId', this.currentCategoryId);
       this.$emit('update:colorsId', this.currentColorId);
     },
     reset() {
       this.$emit('update:priceFrom', 0);
       this.$emit('update:priceTo', 0);
-      this.$emit('update:caregoryId', 0);
+      this.$emit('update:categoryId', 0);
       this.$emit('update:colorsId', 0);
     },
+    loadCategories() {
+      axios.get(API_BASE_URL + "/api/productCategories")
+        .then(response => this.categoriesData = response.data)
+    },
   },
+  created() {
+    this.loadCategories();
+  }
 };
 </script>

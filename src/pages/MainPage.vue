@@ -30,10 +30,11 @@
 </template>
 
 <script>
-import products from '@/data/products';
 import ProductList from '@/components/ProductList.vue';
 import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
+import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 export default {
   name: 'MainPage',
@@ -50,34 +51,61 @@ export default {
       FilterPriceTo: 0,
       FilterCategory: 0,
       FilterColor: 0,
+      ProductData: null,
     };
   },
   computed: {
-    filteredProducts() {
-      let filterProducts = products;
-      if (this.FilterPriceFrom > 0) {
-        filterProducts = filterProducts.filter((product) => product.price > this.FilterPriceFrom);
-      }
-      if (this.FilterPriceTo > 0) {
-        filterProducts = filterProducts.filter((product) => product.price < this.FilterPriceTo);
-      }
-      if (this.FilterColor > 0) {
-        filterProducts = filterProducts
-          .filter((product) => product.colorId.includes(this.FilterColor));
-      }
-      if (this.FilterCategory) {
-        filterProducts = filterProducts
-          .filter((product) => product.categoryId === this.FilterCategory);
-      }
-      return filterProducts;
-    },
     products() {
-      const offset = (this.page - 1) * this.productPerPage;
-      return this.filteredProducts.slice(offset, offset + this.productPerPage);
+      return this.ProductData ?
+        this.ProductData.items.map(product => {
+          return {
+            ...product,
+            image: product.image.file.url
+          }
+        })
+        : [];
     },
     amountProducts() {
-      return this.filteredProducts.length;
+      return this.ProductData ? this.ProductData.pagination.total : 0;
     },
+  },
+  methods: {
+    loadProducts() {
+      clearTimeout(this.loadProductsTimer);
+      this.loadProductsTimer =  setTimeout(() => {
+        axios
+        .get(API_BASE_URL + '/api/products', {
+          params: {
+            page: this.page,
+            limit: this.productPerPage,
+            categoryId: this.FilterCategory,
+            minPrice: this.FilterPriceFrom,
+            maxPrice: this.FilterPriceTo,
+          }
+        })
+        .then(responce => this.ProductData = responce.data)
+      }, 0)
+    }
+  },
+  watch: {
+    page() {
+      this.loadProducts();
+    },
+
+    FilterPriceFrom() {
+      this.loadProducts();
+    },
+
+    FilterPriceTo() {
+      this.loadProducts();
+    },
+
+    FilterCategory() {
+      this.loadProducts();
+    },
+  },
+  created() {
+    this.loadProducts();
   },
 };
 </script>
