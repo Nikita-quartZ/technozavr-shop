@@ -13,21 +13,7 @@
       Артикул: {{ item.productId }}
     </span>
 
-    <div class="product__counter form__counter">
-      <button type="button" aria-label="Убрать один товар">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-minus"></use>
-        </svg>
-      </button>
-
-      <input type="text" v-model="amount" name="count">
-
-      <button type="button" aria-label="Добавить один товар">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-plus"></use>
-        </svg>
-      </button>
-    </div>
+    <FormCounter :count.sync="amount" :cart-item="true"/>
 
     <b class="product__price">
       {{ (item.product.price * item.amount) | numberFormat }}
@@ -42,13 +28,19 @@
 </template>
 
 <script>
+import FormCounter from '@/components/FormCounter.vue';
 import numberFormat from '@/helpers/numberFormat';
 import { mapMutations } from 'vuex';
 
+
 export default {
+  name: 'CartItem',
   props: ['item'],
   filters: {
     numberFormat
+  },
+  components: {
+    FormCounter,
   },
   computed: {
     amount: {
@@ -56,7 +48,7 @@ export default {
         return this.item.amount;
       },
       set(value) {
-        this.$store.commit('updateCartProductAmount', {productId: this.item.productId, amount: value})
+        this.$store.dispatch('updateCartProductAmount', {productId: this.item.productId, amount: value})
       }
     }
   },

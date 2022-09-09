@@ -1,5 +1,5 @@
 <template>
-  <div class="form__counter">
+  <div class="form__counter" :class="{product__counter: cartItem}">
     <button type="button" aria-label="Убрать один товар" @click.prevent="(amount > 1) ? amount-- : 0">
       <svg width="12" height="12" fill="currentColor">
         <use xlink:href="#icon-minus"></use>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  props: ['count'],
+  props: ['count', 'cartItem'],
   name: 'FormCounter',
   computed: {
     amount: {

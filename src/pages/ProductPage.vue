@@ -1,6 +1,8 @@
 <template>
   <div>
-    <main class="content container">
+    <main class="content container" v-if="ProductLoadingFailed">Ошибка загрузки</main>
+    <main class="content container" v-else-if="ProductLoading">Загрузка товара...</main>
+    <main class="content container" v-else>
       <div class="content__top">
         <ul class="breadcrumbs">
           <li class="breadcrumbs__item">
@@ -25,7 +27,7 @@
           <div class="pics__wrapper">
             <img width="570"
               height="570"
-              :src="product.image"
+              :src="product.image.file.url"
               :srcset="product.image"
               :alt="product.title"
             >
@@ -46,41 +48,18 @@
               <fieldset class="form__block">
                 <legend class="form__legend">Цвет:</legend>
                 <ul class="colors">
-                  <li class="colors__item">
+                  <li class="colors__item" v-for="color in productsData.colors" :key="color.code">
                     <label class="colors__label">
                       <input
                         class="colors__radio sr-only"
                         type="radio"
                         name="color-item"
-                        value="blue"
+                        :value="color.code"
                         checked=""
                       >
-                      <span class="colors__value" style="background-color: #73B6EA;">
+                      <span class="colors__value" :style="{backgroundColor: color.code}">
                       </span>
                     </label>
-                  </li>
-                  <li class="colors__item">
-                    <label class="colors__label">
-                      <input
-                        class="colors__radio sr-only"
-                        type="radio"
-                        name="color-item"
-                        value="yellow"
-                      >
-                      <span class="colors__value" style="background-color: #FFBE15;">
-                      </span>
-                    </label>
-                  </li>
-                  <li class="colors__item">
-                    <label class="colors__label">
-                      <input
-                        class="colors__radio sr-only"
-                        type="radio"
-                        name="color-item"
-                        value="gray"
-                      >
-                      <span class="colors__value" style="background-color: #939393;">
-                    </span></label>
                   </li>
                 </ul>
               </fieldset>
@@ -133,11 +112,13 @@
               </fieldset>
 
               <div class="item__row">
-                <ProductCounter :count.sync="productAmount"/>
-                <button class="button button--primery" type="submit">
+                <FormCounter :count.sync="productAmount"/>
+                <button class="button button--primery" type="submit" :disabled="ProductAddSending">
                   В корзину
                 </button>
               </div>
+              <div v-show="ProductAddSending">Товар добавляется в корзину</div>
+              <div v-show="ProductAdded">Товар добавлен в корзину</div>
             </form>
           </div>
         </div>
@@ -197,41 +178,72 @@
 </template>
 
 <script>
-import ProductCounter from '@/components/ProductCounter.vue';
-import product from "@/data/products";
-import categories from "@/data/categories";
+import FormCounter from '@/components/FormCounter.vue';
 import gotoPage from '@/helpers/gotoPage';
 import NumberFormat from '@/helpers/numberFormat';
+import axios from 'axios';
+import { API_BASE_URL } from '../config';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'productPage',
   data() {
     return {
       productAmount: 1,
+      productsData: null,
+      ProductLoading: false,
+      ProductLoadingFailed: false,
+      ProductAdded: false,
+      ProductAddSending: false,
     }
   },
   filters: {
     NumberFormat,
   },
   components: {
-    ProductCounter
+    FormCounter,
   },
   computed: {
     product() {
-      return product.find(product => product.id === Number(this.$route.params.id))
+      return this.productsData
     },
     category() {
-      return categories.find(category => category.id === this.product.categoryId)
+      return this.productsData.category
     }
   },
   methods: {
+    ...mapActions(['addProductToCart']),
+
     gotoPage,
     addToCart() {
-      this.$store.commit(
-        'addProductToCart',
-        {productId: Number(this.$route.params.id) , amount: this.productAmount}
-        );
-    }
+      this.productAdded = false;
+      this.ProductAddSending = true;
+      this.addProductToCart({productId: Number(this.$route.params.id), amount: this.productAmount})
+        .then(() => {
+          this.productAdded = true;
+          this.ProductAddSending = false;
+        });
+    },
+    loadProducts() {
+      this.ProductLoading = true;
+      this.ProductLoadingFailed = false;
+      axios.get(API_BASE_URL + `/api/products/${this.$route.params.id}`)
+        .then(response => this.productsData = response.data)
+        .catch(() => this.ProductLoadingFailed = true)
+        .then(() => this.ProductLoading = false)
+    },
+
   },
+  created() {
+    this.loadProducts();
+  },
+  watch: {
+    '$route.params.id': {
+      handler() {
+        this.loadProducts();
+      },
+      immediate: true,
+    }
+  }
 }
 </script>

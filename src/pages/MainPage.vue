@@ -16,6 +16,8 @@
         :colors-id.sync='FilterColor'
       />
       <section class="catalog">
+        <div v-show="ProductsLoading">Загрузка товаров...</div>
+        <div v-show="ProductsLoadingFailed">Произошла ошибка при загрузки товаров <button @click.prevent="loadProducts">Попробовать ещё раз</button></div>
         <ProductList
           :products="products"
         />
@@ -52,6 +54,8 @@ export default {
       FilterCategory: 0,
       FilterColor: 0,
       ProductData: null,
+      ProductsLoading: false,
+      ProductsLoadingFailed: false,
     };
   },
   computed: {
@@ -71,6 +75,8 @@ export default {
   },
   methods: {
     loadProducts() {
+      this.ProductsLoading = true;
+      this.ProductsLoadingFailed = false;
       clearTimeout(this.loadProductsTimer);
       this.loadProductsTimer =  setTimeout(() => {
         axios
@@ -79,12 +85,17 @@ export default {
             page: this.page,
             limit: this.productPerPage,
             categoryId: this.FilterCategory,
+            colorId: this.FilterColor,
             minPrice: this.FilterPriceFrom,
             maxPrice: this.FilterPriceTo,
           }
         })
         .then(responce => this.ProductData = responce.data)
-      }, 0)
+        .catch(() => this.ProductsLoadingFailed = true)
+        .then(() => {
+          this.ProductsLoading = false;
+        })
+      }, 500)
     }
   },
   watch: {
@@ -101,6 +112,9 @@ export default {
     },
 
     FilterCategory() {
+      this.loadProducts();
+    },
+    FilterColor() {
       this.loadProducts();
     },
   },

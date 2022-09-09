@@ -4,7 +4,7 @@
       <div class="header__wrapper container">
         <span class="header__info">Каталог</span>
 
-        <a class="header__logo" href="#">
+        <a class="header__logo" href="#/main">
           <img src="img/svg/logo-tech.svg" alt="Логотип интернет магазина Технозавррр" width="190" height="33">
         </a>
 
@@ -84,10 +84,10 @@
         </ul>
 
         <p class="footer__desc">
-          Все права на&nbsp;материалы, находящиеся на&nbsp;сайте, охраняются в&nbsp;соответствии с&nbsp;законодательством&nbsp;РФ, 
+          Все права на&nbsp;материалы, находящиеся на&nbsp;сайте, охраняются в&nbsp;соответствии с&nbsp;законодательством&nbsp;РФ,
           в&nbsp;том числе об&nbsp;авторском праве и&nbsp;смежных правах.
         </p>
-        
+
         <ul class="footer__data">
           <li>
             <a class="footer__link" href="#" target="_blank" rel="noopener" type="application/pdf">
@@ -107,28 +107,28 @@
       </div>
     </footer>
   </div>
-  
+
 </template>
 
 <script>
 import CartIndicator from './components/CartIndicator.vue';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'App',
-  data() {
-    return {
-      currentPage: 'main',
-      currentParams: {},
-    };
-  },
   components: {
     CartIndicator,
   },
-  methods: {
-    gotoPage(PageName, PageParams) {
-      this.currentPage = PageName;
-      this.currentParams = PageParams || {};
+  created() {
+    const userAccessKey = localStorage.getItem('userAccessKey');
+    if (userAccessKey) {
+      this.UpdateUserAccessKey(userAccessKey);
     }
+    this.loadCart();
   },
+  methods: {
+    ...mapActions(['loadCart']),
+    ...mapMutations(['UpdateUserAccessKey']),
+  }
 };
 </script>
