@@ -19,18 +19,6 @@ export default new Vuex.Store({
         item.amount = amount
       }
     },
-    deleteCartProduct(state, productId) {
-      console.log(state.UserAccessKey);
-      axios.delete(`https://vue-study.skillbox.cc/api/baskets/products?userAccessKey=${state.UserAccessKey}`, {
-        data: {
-          productId: productId,
-        }
-      }).then(responce => {
-        if (responce.status === 200) {
-          state.CartProducts = state.CartProducts.filter(item => item.productId !== productId)
-        }
-      })
-    },
     UpdateUserAccessKey(state, accessKey){
       state.UserAccessKey = accessKey;
     },
@@ -111,6 +99,17 @@ export default new Vuex.Store({
         .catch(() => {
           context.commit('syncCartProducts')
         })
-    }
+    },
+    deleteCartProduct(context, productId) {
+      const lastInfo = context.state.CartProducts;
+      context.state.CartProducts = context.state.CartProducts.filter(item => item.productId !== productId)
+      axios.delete(`https://vue-study.skillbox.cc/api/baskets/products?userAccessKey=${context.state.UserAccessKey}`, {
+        data: {
+          productId: productId,
+        }
+      }).catch(() => {
+        context.state.CartProducts = lastInfo;
+      })
+    },
   },
 });

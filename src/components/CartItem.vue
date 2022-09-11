@@ -30,7 +30,7 @@
 <script>
 import FormCounter from '@/components/FormCounter.vue';
 import numberFormat from '@/helpers/numberFormat';
-import { mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 
 
 export default {
@@ -53,7 +53,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations({deleteProduct: 'deleteCartProduct'}),
+    ...mapActions({deleteProduct: 'deleteCartProduct'}),
   }
 }
 </script>
