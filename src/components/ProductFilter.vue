@@ -27,7 +27,7 @@
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
         <ul class="colors" v-show="colorsData">
-          <li class="colors__item" v-for="color in colorsData.items" :key='color.id'>
+          <li class="colors__item" v-for="color in colors" :key='color.id'>
             <label class="colors__label">
               <input class="colors__radio sr-only" type="radio" name="color" :value="color.id" v-model="currentColorId">
               <span class="colors__value" :style="{backgroundColor: color.code}">
@@ -126,6 +126,9 @@ export default {
   computed: {
     categories() {
       return this.categoriesData ? this.categoriesData.items : [];
+    },
+    colors() {
+      return this.colorsData ? this.colorsData.items : [];
     },
   },
   watch: {
