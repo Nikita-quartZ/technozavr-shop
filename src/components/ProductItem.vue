@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import gotoPage from '@/helpers/gotoPage';
 import NumberFormat from '@/helpers/numberFormat';
 
 export default {
@@ -48,8 +47,5 @@ export default {
   filters: {
     NumberFormat,
   },
-  methods: {
-    gotoPage,
-  }
 };
 </script>

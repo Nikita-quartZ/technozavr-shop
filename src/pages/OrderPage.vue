@@ -147,34 +147,13 @@
             </div>
           </div>
 
-          <div class="cart__block">
-            <ul class="cart__orders">
-              <li class="cart__order">
-                <h3>Смартфон Xiaomi Redmi Note 7 Pro 6/128GB</h3>
-                <b>18 990 ₽</b>
-                <span>Артикул: 150030</span>
-              </li>
-              <li class="cart__order">
-                <h3>Гироскутер Razor Hovertrax 2.0ii</h3>
-                <b>4 990 ₽</b>
-                <span>Артикул: 150030</span>
-              </li>
-              <li class="cart__order">
-                <h3>Электрический дрифт-карт Razor Lil’ Crazy</h3>
-                <b>8 990 ₽</b>
-                <span>Артикул: 150030</span>
-              </li>
-            </ul>
-
-            <div class="cart__total">
-              <p>Доставка: <b>500 ₽</b></p>
-              <p>Итого: <b>3</b> товара на сумму <b>37 970 ₽</b></p>
-            </div>
-
+          <OrderList :products="this.$store.state.CartProductsData">
             <button class="cart__button button button--primery" type="submit">
               Оформить заказ
             </button>
-          </div>
+            <div v-show="formLoading">Загрузка товаров...</div>
+          </OrderList>
+
           <div class="cart__error form__error-block" v-show="formErrorMessage">
             <h4>Заявка не отправлена!</h4>
             <p>
@@ -190,6 +169,7 @@
 <script>
 import BaseFormText from '@/components/BaseFormText';
 import BaseFormTextArea from '@/components/BaseFormTextArea';
+import OrderList from '@/components/OrderList';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 
@@ -199,16 +179,19 @@ export default {
       formData: {},
       formError: {},
       formErrorMessage: '',
+      formLoading: false,
     };
   },
   components: {
     BaseFormText,
     BaseFormTextArea,
+    OrderList,
   },
   methods: {
     order(){
       this.formError = {};
       this.formErrorMessage = '';
+      this.formLoading = true,
       axios
         .post(API_BASE_URL + '/api/orders', {
           ...this.formData
@@ -217,10 +200,14 @@ export default {
             userAccessKey: this.$store.state.UserAccessKey
           }
         })
-        .then(() => {
-          this.$store.commit('resetCart')
+        .then(responce => {
+          this.formLoading = false,
+          this.$store.commit('resetCart');
+          this.$store.commit('updateOrderInfo', responce.data);
+          this.$router.push({name: 'orderInfo', params: {id: responce.data.id}})
         })
         .catch(error => {
+          this.formLoading = false,
           this.formError = error.response.data.error.request || {};
           this.formErrorMessage = error.response.data.error.message;
         })
