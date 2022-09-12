@@ -53,7 +53,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions({deleteProduct: 'deleteCartProduct'}),
+    ...mapActions({deleteProduct: 'updateDeleteCartProduct'}),
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
-    <div class="cart__block" v-show="$store.state.CartProductsData.length > 0">
+    <div class="cart__block" v-show="$store.state.cartProductsData.length > 0">
       <ul class="cart__orders">
-        <li class="cart__order" v-for="product in this.$store.state.CartProductsData" :key="product.product.title">
+        <li class="cart__order" v-for="product in this.$store.state.cartProductsData" :key="product.product.title">
           <h3>{{ product.product.title }}</h3>
           <b>{{ product.product.price * product.quantity | NumberFormat }} ₽</b>
           <span>Артикул: {{ product.product.id }}</span>
@@ -10,7 +10,7 @@
 
       <div class="cart__total">
         <p>Доставка: <b>500 ₽</b></p>
-        <p>Итого: <b>{{ this.$store.state.CartProductsData.length }}</b> товара на сумму <b>{{ totalPrice | NumberFormat }} ₽</b></p>
+        <p>Итого: <b>{{ this.$store.state.cartProductsData.length }}</b> товара на сумму <b>{{ totalPrice | NumberFormat }} ₽</b></p>
       </div>
 
       <slot />

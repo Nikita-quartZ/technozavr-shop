@@ -147,7 +147,7 @@
             </div>
           </div>
 
-          <OrderList :products="this.$store.state.CartProductsData">
+          <OrderList :products="this.$store.state.cartProductsData">
             <button class="cart__button button button--primery" type="submit">
               Оформить заказ
             </button>
@@ -197,7 +197,7 @@ export default {
           ...this.formData
         }, {
           params: {
-            userAccessKey: this.$store.state.UserAccessKey
+            userAccessKey: this.$store.state.userAccessKey
           }
         })
         .then(responce => {

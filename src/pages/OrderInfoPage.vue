@@ -76,15 +76,14 @@
           </ul>
         </div>
 
-        <OrderListInfo/>
+        <OrderListInfo />
       </form>
     </section>
   </main>
 </template>
 
 <script>
-  import OrderListInfo from '@/components/OrderListInfo';
-
+import OrderListInfo from '@/components/OrderListInfo';
   export default {
     created(){
       if (this.$store.state.orderInfo && this.$store.state.orderInfo.id === this.$route.params.id) return;

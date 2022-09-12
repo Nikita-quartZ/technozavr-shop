@@ -122,13 +122,13 @@ export default {
   created() {
     const userAccessKey = localStorage.getItem('userAccessKey');
     if (userAccessKey) {
-      this.UpdateUserAccessKey(userAccessKey);
+      this.updateUserAccessKey(userAccessKey);
     }
     this.loadCart();
   },
   methods: {
     ...mapActions(['loadCart']),
-    ...mapMutations(['UpdateUserAccessKey']),
+    ...mapMutations(['updateUserAccessKey']),
   }
 };
 </script>
