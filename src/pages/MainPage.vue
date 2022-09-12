@@ -9,19 +9,19 @@
       </span>
     </div>
     <div class="content__catalog">
-      <ProductFilter
-        :price-from.sync='FilterPriceFrom'
-        :price-to.sync='FilterPriceTo'
-        :category-id.sync='FilterCategory'
-        :colors-id.sync='FilterColor'
+      <productFilter
+        :price-from.sync='filterPriceFrom'
+        :price-to.sync='filterPriceTo'
+        :category-id.sync='filterCategory'
+        :colors-id.sync='filterColor'
       />
       <section class="catalog">
-        <div v-show="ProductsLoading">Загрузка товаров...</div>
-        <div v-show="ProductsLoadingFailed">Произошла ошибка при загрузки товаров <button @click.prevent="loadProducts">Попробовать ещё раз</button></div>
-        <ProductList
+        <div v-show="productsLoading">Загрузка товаров...</div>
+        <div v-show="productsLoadingFailed">Произошла ошибка при загрузки товаров <button @click.prevent="loadProducts">Попробовать ещё раз</button></div>
+        <productList
           :products="products"
         />
-        <BasePagination
+        <basePagination
           v-model="page"
           :count="amountProducts"
           :per-page="productPerPage"
@@ -32,36 +32,36 @@
 </template>
 
 <script>
-import ProductList from '@/components/ProductList.vue';
-import BasePagination from '@/components/BasePagination.vue';
-import ProductFilter from '@/components/ProductFilter.vue';
+import productList from '@/components/ProductList.vue';
+import basePagination from '@/components/BasePagination.vue';
+import productFilter from '@/components/ProductFilter.vue';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 
 export default {
   name: 'MainPage',
   components: {
-    ProductList,
-    BasePagination,
-    ProductFilter,
+    productList,
+    basePagination,
+    productFilter,
   },
   data() {
     return {
       page: 1,
       productPerPage: 3,
-      FilterPriceFrom: 0,
-      FilterPriceTo: 0,
-      FilterCategory: 0,
-      FilterColor: 0,
-      ProductData: null,
-      ProductsLoading: false,
-      ProductsLoadingFailed: false,
+      filterPriceFrom: 0,
+      filterPriceTo: 0,
+      filterCategory: 0,
+      filterColor: 0,
+      productData: null,
+      productsLoading: false,
+      productsLoadingFailed: false,
     };
   },
   computed: {
     products() {
-      return this.ProductData ?
-        this.ProductData.items.map(product => {
+      return this.productData ?
+        this.productData.items.map(product => {
           return {
             ...product,
             image: product.image.file.url
@@ -70,13 +70,13 @@ export default {
         : [];
     },
     amountProducts() {
-      return this.ProductData ? this.ProductData.pagination.total : 0;
+      return this.productData ? this.productData.pagination.total : 0;
     },
   },
   methods: {
     loadProducts() {
-      this.ProductsLoading = true;
-      this.ProductsLoadingFailed = false;
+      this.productsLoading = true;
+      this.productsLoadingFailed = false;
       clearTimeout(this.loadProductsTimer);
       this.loadProductsTimer =  setTimeout(() => {
         axios
@@ -84,16 +84,16 @@ export default {
           params: {
             page: this.page,
             limit: this.productPerPage,
-            categoryId: this.FilterCategory,
-            colorId: this.FilterColor,
-            minPrice: this.FilterPriceFrom,
-            maxPrice: this.FilterPriceTo,
+            categoryId: this.filterCategory,
+            colorId: this.filterColor,
+            minPrice: this.filterPriceFrom,
+            maxPrice: this.filterPriceTo,
           }
         })
-        .then(responce => this.ProductData = responce.data)
-        .catch(() => this.ProductsLoadingFailed = true)
+        .then(responce => this.productData = responce.data)
+        .catch(() => this.productsLoadingFailed = true)
         .then(() => {
-          this.ProductsLoading = false;
+          this.productsLoading = false;
         })
       }, 500)
     }
@@ -103,18 +103,18 @@ export default {
       this.loadProducts();
     },
 
-    FilterPriceFrom() {
+    filterPriceFrom() {
       this.loadProducts();
     },
 
-    FilterPriceTo() {
+    filterPriceTo() {
       this.loadProducts();
     },
 
-    FilterCategory() {
+    filterCategory() {
       this.loadProducts();
     },
-    FilterColor() {
+    filterColor() {
       this.loadProducts();
     },
   },
@@ -123,7 +123,3 @@ export default {
   },
 };
 </script>
-
-<style>
-
-</style>

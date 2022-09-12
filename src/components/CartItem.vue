@@ -13,7 +13,7 @@
       Артикул: {{ item.productId }}
     </span>
 
-    <FormCounter :count.sync="amount" :cart-item="true"/>
+    <formCounter :count.sync="amount" :cart-item="true"/>
 
     <b class="product__price">
       {{ (item.product.price * item.amount) | numberFormat }}
@@ -28,19 +28,19 @@
 </template>
 
 <script>
-import FormCounter from '@/components/FormCounter.vue';
+import formCounter from '@/components/FormCounter.vue';
 import numberFormat from '@/helpers/numberFormat';
 import { mapActions } from 'vuex';
 
 
 export default {
-  name: 'CartItem',
+  name: 'cartItem',
   props: ['item'],
   filters: {
     numberFormat
   },
   components: {
-    FormCounter,
+    formCounter,
   },
   computed: {
     amount: {

@@ -76,21 +76,21 @@
           </ul>
         </div>
 
-        <OrderListInfo />
+        <orderListInfo />
       </form>
     </section>
   </main>
 </template>
 
 <script>
-import OrderListInfo from '@/components/OrderListInfo';
+import orderListInfo from '@/components/OrderListInfo';
   export default {
     created(){
       if (this.$store.state.orderInfo && this.$store.state.orderInfo.id === this.$route.params.id) return;
       this.$store.dispatch('loadOrderInfo', this.$route.params.id)
     },
     components: {
-      OrderListInfo,
+      orderListInfo,
     },
   }
 </script>

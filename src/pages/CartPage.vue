@@ -28,7 +28,7 @@
         <form class="cart__form form" action="#" method="POST" onsubmit="return false;">
           <div class="cart__field">
             <ul class="cart__list">
-              <CartItem :item="item" v-for="item in products" :key="item.productId" />
+              <cartItem :item="item" v-for="item in products" :key="item.productId" />
             </ul>
           </div>
 
@@ -52,7 +52,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import CartItem from '../components/CartItem.vue';
+import cartItem from '../components/CartItem.vue';
 
 export default {
   computed: {
@@ -84,7 +84,7 @@ export default {
     },
   },
   components: {
-    CartItem,
+    cartItem,
   }
 }
 </script>

@@ -110,7 +110,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '../config'
 
 export default {
-  name: 'ProductFilter',
+  name: 'productFilter',
   data() {
     return {
       currentPriceFrom: 0,
@@ -118,7 +118,6 @@ export default {
       currentCategoryId: 0,
       currentColorId: 0,
       colorsData: null,
-
       categoriesData: null,
     };
   },

@@ -41,15 +41,15 @@
 
 <script>
 export default {
-  name: 'BasePagiantion',
+  name: 'basePagiantion',
   model: {
     prop: 'page',
     event: 'paginate',
   },
-  props: ['page', 'count', 'PerPage'],
+  props: ['page', 'count', 'perPage'],
   computed: {
     pages() {
-      return Math.ceil(this.count / this.PerPage);
+      return Math.ceil(this.count / this.perPage);
     },
   },
   methods: {

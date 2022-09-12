@@ -1,14 +1,14 @@
 <template>
-  <BaseFormField :title="title" :error="error">
+  <baseFormField :title="title" :error="error">
     <input class="form__input" v-model="dataValue" :type="type" :placeholder="placeholder">
-  </BaseFormField>
+  </baseFormField>
 </template>
 
 <script>
-  import FormFieldMixins from '@/mixins/FormFieldMixins';
+  import formFieldMixins from '@/mixins/FormFieldMixins';
 
   export default {
     props: ['type'],
-    mixins: [FormFieldMixins]
+    mixins: [formFieldMixins]
   }
 </script>

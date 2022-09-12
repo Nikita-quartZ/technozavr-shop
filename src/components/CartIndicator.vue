@@ -10,6 +10,6 @@
 
 <script>
 export default {
-  name: "CartIndicator",
+  name: "cartIndicator",
 }
 </script>

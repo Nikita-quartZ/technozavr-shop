@@ -1,7 +1,7 @@
 <template>
   <div>
-    <main class="content container" v-if="ProductLoadingFailed">Ошибка загрузки</main>
-    <main class="content container" v-else-if="ProductLoading">Загрузка товара...</main>
+    <main class="content container" v-if="productLoadingFailed">Ошибка загрузки</main>
+    <main class="content container" v-else-if="productLoading">Загрузка товара...</main>
     <main class="content container" v-else>
       <div class="content__top">
         <ul class="breadcrumbs">
@@ -42,7 +42,7 @@
           <div class="item__form">
             <form class="form" action="#" method="POST" @submit.prevent="addToCart">
               <b class="item__price">
-                {{ product.price |  NumberFormat }} ₽
+                {{ product.price |  numberFormat }} ₽
               </b>
 
               <fieldset class="form__block">
@@ -112,13 +112,13 @@
               </fieldset>
 
               <div class="item__row">
-                <FormCounter :count.sync="productAmount"/>
-                <button class="button button--primery" type="submit" :disabled="ProductAddSending">
+                <formCounter :count.sync="productAmount"/>
+                <button class="button button--primery" type="submit" :disabled="productAddSending">
                   В корзину
                 </button>
               </div>
-              <div v-show="ProductAddSending">Товар добавляется в корзину</div>
-              <div v-show="ProductAdded">Товар добавлен в корзину</div>
+              <div v-show="productAddSending">Товар добавляется в корзину</div>
+              <div v-show="productAdded">Товар добавлен в корзину</div>
             </form>
           </div>
         </div>
@@ -178,9 +178,9 @@
 </template>
 
 <script>
-import FormCounter from '@/components/FormCounter.vue';
+import formCounter from '@/components/FormCounter.vue';
 import gotoPage from '@/helpers/gotoPage';
-import NumberFormat from '@/helpers/numberFormat';
+import numberFormat from '@/helpers/numberFormat';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 import { mapActions } from 'vuex';
@@ -191,17 +191,17 @@ export default {
     return {
       productAmount: 1,
       productsData: null,
-      ProductLoading: false,
-      ProductLoadingFailed: false,
-      ProductAdded: false,
-      ProductAddSending: false,
+      productLoading: false,
+      productLoadingFailed: false,
+      productAdded: false,
+      productAddSending: false,
     }
   },
   filters: {
-    NumberFormat,
+    numberFormat,
   },
   components: {
-    FormCounter,
+    formCounter,
   },
   computed: {
     product() {
@@ -217,20 +217,20 @@ export default {
     gotoPage,
     addToCart() {
       this.productAdded = false;
-      this.ProductAddSending = true;
+      this.productAddSending = true;
       this.addProductToCart({productId: Number(this.$route.params.id), amount: this.productAmount})
         .then(() => {
           this.productAdded = true;
-          this.ProductAddSending = false;
+          this.productAddSending = false;
         });
     },
     loadProducts() {
-      this.ProductLoading = true;
-      this.ProductLoadingFailed = false;
+      this.productLoading = true;
+      this.productLoadingFailed = false;
       axios.get(API_BASE_URL + `/api/products/${this.$route.params.id}`)
         .then(response => this.productsData = response.data)
-        .catch(() => this.ProductLoadingFailed = true)
-        .then(() => this.ProductLoading = false)
+        .catch(() => this.productLoadingFailed = true)
+        .then(() => this.productLoading = false)
     },
 
   },

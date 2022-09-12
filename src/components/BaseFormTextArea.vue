@@ -1,13 +1,13 @@
 <template>
-  <BaseFormField :title="title" :error="error">
+  <baseFormField :title="title" :error="error">
     <textarea class="form__input form__input--area" v-model="dataValue" :placeholder="placeholder"></textarea>
-  </BaseFormField>
+  </baseFormField>
 </template>
 
 <script>
-  import FormFieldMixins from '@/mixins/FormFieldMixins';
+  import formFieldMixins from '@/mixins/FormFieldMixins';
 
   export default {
-    mixins: [FormFieldMixins]
+    mixins: [formFieldMixins]
   }
 </script>

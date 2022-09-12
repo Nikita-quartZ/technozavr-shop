@@ -92,15 +92,15 @@
         <form class="cart__form form" action="#" method="POST" @submit.prevent="order">
           <div class="cart__field">
             <div class="cart__data">
-              <BaseFormText v-model="formData.name" :error="formError.name" title="ФИО"
+              <baseFormText v-model="formData.name" :error="formError.name" title="ФИО"
                 placeholder="Введите ваше полное имя" type="text" />
-              <BaseFormText v-model="formData.address" :error="formError.address" title="Адрес доставки"
+              <baseFormText v-model="formData.address" :error="formError.address" title="Адрес доставки"
                 placeholder="Введите ваш адрес" type="text" />
-              <BaseFormText v-model="formData.phone" :error="formError.phone" title="Телефон"
+              <baseFormText v-model="formData.phone" :error="formError.phone" title="Телефон"
                 placeholder="Введите ваш телефон" type="tel" />
-              <BaseFormText v-model="formData.email" :error="formError.email" title="Email"
+              <baseFormText v-model="formData.email" :error="formError.email" title="Email"
                 placeholder="Введите ваш Email" type="email" />
-              <BaseFormTextArea v-model="formData.comment" :error="formError.comment" title="Комментарий к заказу"
+              <baseFormTextArea v-model="formData.comment" :error="formError.comment" title="Комментарий к заказу"
                 placeholder="Ваши пожелания" />
             </div>
 
@@ -147,12 +147,12 @@
             </div>
           </div>
 
-          <OrderList :products="this.$store.state.cartProductsData">
+          <orderList :products="this.$store.state.cartProductsData">
             <button class="cart__button button button--primery" type="submit">
               Оформить заказ
             </button>
             <div v-show="formLoading">Загрузка товаров...</div>
-          </OrderList>
+          </orderList>
 
           <div class="cart__error form__error-block" v-show="formErrorMessage">
             <h4>Заявка не отправлена!</h4>
@@ -167,9 +167,9 @@
 </template>
 
 <script>
-import BaseFormText from '@/components/BaseFormText';
-import BaseFormTextArea from '@/components/BaseFormTextArea';
-import OrderList from '@/components/OrderList';
+import baseFormText from '@/components/BaseFormText';
+import baseFormTextArea from '@/components/BaseFormTextArea';
+import orderList from '@/components/OrderList';
 import axios from 'axios';
 import { API_BASE_URL } from '../config';
 
@@ -183,9 +183,9 @@ export default {
     };
   },
   components: {
-    BaseFormText,
-    BaseFormTextArea,
-    OrderList,
+    baseFormText,
+    baseFormTextArea,
+    orderList,
   },
   methods: {
     order(){
