@@ -11,6 +11,7 @@ export default new Vuex.Store({
     cartProducts: [],
     cartProductsData: [],
     orderInfo: null,
+    orderInfoError: null,
     lastInfo: null,
   },
   mutations: {
@@ -73,6 +74,9 @@ export default new Vuex.Store({
       })
       .then(responce => {
         context.commit('updateOrderInfo', responce.data)
+      })
+      .catch(() => {
+        context.state.orderInfoError = true;
       })
     },
     loadCart(context) {

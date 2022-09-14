@@ -10,7 +10,7 @@ import OrderInfoPage from '@/pages/OrderInfoPage';
 Vue.use(VueRouter);
 
 const routes = [
-  {name: 'main', component: MainPage, path: '/main'},
+  {name: 'main', component: MainPage, path: '/'},
   {name: 'product', component: ProductPage, path: '/product/:id'},
   {name: 'cartProduct', component: CartPage, path: '/cart-product'},
   {name: 'order', component: OrderPage, path: '/order'},
