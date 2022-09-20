@@ -120,11 +120,12 @@ export default {
     CartIndicator,
   },
   created() {
-    const userAccessKey = localStorage.getItem('userAccessKey');
-    if (userAccessKey) {
-      this.updateUserAccessKey(userAccessKey);
-    }
-    this.loadCart();
+    // const userAccessKey = localStorage.getItem('userAccessKey');
+    // if (userAccessKey) {
+    //   this.updateUserAccessKey(userAccessKey);
+    // }
+    // this.loadCart();
+    localStorage.clear()
   },
   methods: {
     ...mapActions(['loadCart']),
